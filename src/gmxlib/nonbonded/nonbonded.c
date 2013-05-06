@@ -252,8 +252,8 @@ gmx_nonbonded_set_kernel_pointers(FILE *log, t_nblist *nl)
 
     if (nl->type == GMX_NBLIST_INTERACTION_FREE_ENERGY)
     {
-        nl->kernelptr_vf       = (void *) gmx_nb_free_energy_kernel;
-        nl->kernelptr_f        = (void *) gmx_nb_free_energy_kernel;
+        nl->kernelptr_vf       = (void *) gmx_nb_free_energy_kernel_gapsys;
+        nl->kernelptr_f        = (void *) gmx_nb_free_energy_kernel_gapsys;
         nl->simd_padding_width = 1;
     }
     else if (!gmx_strcasecmp_min(geom, "CG-CG"))
@@ -642,7 +642,7 @@ do_nonbonded_listed(int ftype, int nbonds,
             c6B              = iparams[itype].lj14.c6B*6.0;
             c12B             = iparams[itype].lj14.c12B*12.0;
 
-            fscal            = nb_free_energy_evaluate_single(r2, fr->sc_r_power, fr->sc_alphacoul, fr->sc_alphavdw,
+            fscal            = nb_free_energy_evaluate_single_gapsys(r2, fr->sc_r_power, fr->sc_alphacoul, fr->sc_alphavdw,
                                                               fr->tab14.scale, fr->tab14.data, qq, c6, c12, qqB, c6B, c12B,
                                                               LFC, LFV, DLF, lfac_coul, lfac_vdw, dlfac_coul, dlfac_vdw,
                                                               fr->sc_sigma6_def, fr->sc_sigma6_min, sigma2_def, sigma2_min, &velec, &vvdw, dvdl);
