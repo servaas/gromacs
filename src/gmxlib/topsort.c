@@ -64,6 +64,12 @@ static gmx_bool ip_pert(int ftype, const t_iparams *ip)
         case F_HARMONIC:
         case F_ANGLES:
         case F_G96ANGLES:
+        case F_UREY_BRADLEY:
+            bPert = (ip->u_b.thetaA != ip->u_b.thetaB ||
+                     ip->u_b.kthetaA != ip->u_b.kthetaB ||
+                     ip->u_b.r13A != ip->u_b.r13B ||
+                     ip->u_b.kUBA  != ip->u_b.kUBB);
+            break;
         case F_IDIHS:
             bPert = (ip->harmonic.rA  != ip->harmonic.rB ||
                      ip->harmonic.krA != ip->harmonic.krB);
